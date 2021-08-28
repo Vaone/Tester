@@ -1,0 +1,8 @@
+.MyBtn {
+  padding: 5px;
+  border: 1px dashed teal;
+  border-radius: 5px;
+  background:ghostwhite;
+  color: teal;
+  cursor: pointer;
+}

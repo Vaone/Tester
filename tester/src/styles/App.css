@@ -1,0 +1,49 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.App {
+  padding: 10px;
+}
+
+.content {
+  padding: 10px
+}
+
+/* transitions */
+.question-enter {
+  opacity: 0;
+}
+.question-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.question-exit {
+  opacity: 1;
+}
+.question-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
+
+.flex-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.questions {
+  
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+}
