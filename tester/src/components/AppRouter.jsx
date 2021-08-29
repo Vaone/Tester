@@ -11,7 +11,7 @@ import Exam from '../pages/Exam';
 const AppRouter = () => {
   return (
     <Switch>
-      <Route path='/home'>
+      <Route exact path='/'>
         <Home />
       </Route>
       <Route path='/createTests'>
@@ -23,13 +23,14 @@ const AppRouter = () => {
       <Route path='/pathTest'>
         <PathTest />
       </Route>
-      <Route path='/pathQuestions'>
-        <PathQuestions />
-      </Route>
+      <Route exact path='/pathQuestions' component={PathQuestions}/>
+      <Route path='/pathQuestions/step2' component={Step2}/>
+      <Route path='/pathQuestions/step3' component={Step3}/>
+      <Route path='/pathQuestions/result' component={result}/>
       <Route path='/Exam'>
         <Exam />
       </Route>
-      <Route path='/error'>
+      <Route path='/error' component={Error}>
         <Error />
       </Route>
       <Redirect to="/error" />
