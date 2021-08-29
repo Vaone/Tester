@@ -1,80 +1,99 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import MyInput from "../components/UI/input/MyInput";
 
 const PathQuestions = () => {
   const [questions, setQuestion] = useState([
     {
       id: 1,
-      object: 'math',
-      question: '3+1',
-      answer: '4'
+      object: "math",
+      theme: "plus",
+      question: "3+1",
+      answer: "4",
     },
     {
       id: 2,
-      object: 'math',
-      question: '2+1',
-      answer: '4'
+      object: "math",
+      theme: "plus",
+      question: "2+1",
+      answer: "3",
     },
-  ])
+  ]);
 
-  const [uAnswer, setUAnswer] = useState([])
-  const [uAnswer2, setUAnswer2] = useState([])
-  const [uAnswersArray, setuAnswersArray] = useState([])
+  const [userAnswer, setUserAnswer] = useState([]);
+  const [userAnswer2, setUserAnswer2] = useState([]);
+  const [uAnswersArray, setUAnswersArray] = useState([]);
 
-  function giveAnswer(ans, setAnswer) {
-    setuAnswersArray([...uAnswersArray, ans]);
-    setAnswer('');
+  const [rightAnswers, setRightAnswers] = useState(
+    questions.map((q) => q.answer)
+  );
+
+  function checkAnswers(e) {
+    e.preventDefault();
+    if (rightAnswers.join(",") === uAnswersArray.join(",")) {
+      alert("same members");
+    } else alert("not a match");
   }
 
-  function endTest() {
-    if (uAnswer) {
-      giveAnswer(uAnswer, setUAnswer);
+  function giveAnswer(ans, setter) {
+    setter(ans);
+  }
+
+  function endTest(...args) {
+    if (args) {
+      setUAnswersArray([...uAnswersArray, args]);
     }
-    if (uAnswer2) {
-      giveAnswer(uAnswer2, setUAnswer2);
-    }
-    console.log(uAnswersArray);
+    setUserAnswer('');
+    setUserAnswer2('');
   }
 
   if (!questions.length) {
     return <h1>Вопросов не найдено</h1>;
   }
+
   return (
-    <div className='flex-wrapper'>
+    <div className="flex-wrapper">
       <h1>{questions.object}</h1>
-      <div className='questions'>
+      <div className="questions">
         <TransitionGroup>
-          {questions.map(q => (
+          {questions.map((q) => (
             <CSSTransition key={q.id} timeout={500} classNames="question">
               <div>
                 <p>{q.question}</p>
-                
               </div>
             </CSSTransition>
           ))}
         </TransitionGroup>
       </div>
-      <div className='inputs'>
-        <div className='input'>
+      <div className="inputs">
+        <div className="input">
           <input
-            value = {uAnswer}
-            onChange = {(e)=>setUAnswer(e.target.value)}
+            type="text"
+            value={userAnswer}
+            onChange={(e) => giveAnswer(e.target.value, setUserAnswer)}
           />
-          {/* <button onClick={()=>giveAnswer(uAnswer, setUAnswer)}>Подтвердить ответ</button> */}
         </div>
-        <div className='input'>
+        <div className="input">
           <input
-            value = {uAnswer2}
-            onChange = {(e)=>setUAnswer2(e.target.value)}
+            type="text"
+            value={userAnswer2}
+            onChange={(e) => giveAnswer(e.target.value, setUserAnswer2)}
           />
-          {/* <button onClick={()=>giveAnswer(uAnswer2, setUAnswer2)}>Подтвердить ответ</button> */}
         </div>
-        
-        <button onClick={()=>{endTest()}}>Завершить</button>
-        
+        <button
+          type="submit"
+          onClick={
+            (e)=>checkAnswers(e)
+          }
+          onFocus={(e) => {
+            e.preventDefault();
+            endTest(userAnswer, userAnswer2);}}
+        >
+          Завершить
+        </button>
       </div>
     </div>
-  )
+  );
 };
 
 export default PathQuestions;
