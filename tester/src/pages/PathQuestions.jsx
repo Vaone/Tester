@@ -1,6 +1,8 @@
 import React, { useMemo, useState } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import InputList from "../components/InputList";
+import {Link} from 'react-router-dom';
+import MyBtn from '../components/UI/button/MyBtn'
 
 const PathQuestions = () => {
   const [questions, setQuestion] = useState([
@@ -77,6 +79,13 @@ const PathQuestions = () => {
       />
 
       {/* <Answers /> */}
+
+
+
+      <MyBtn style={{
+        textDecoration: 'none',
+        color: 'black'
+      }}><Link to="/pathQuestions/step1">Начать тест</Link></MyBtn>
     </div>
   );
 };
