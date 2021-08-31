@@ -1,15 +1,14 @@
-import React from "react";
+import React, { useMemo } from "react";
 
-const AnswerList = ({
-  answerOptions,
-  question,
-  rightAnswer,
-  register,
-  show,
-}) => {
+const AnswerList = ({ answerOptions, question, register, show }) => {
+
+  const sortedAnswers = useMemo(() => {
+    return [...answerOptions].sort(() => Math.random() - 0.5)
+  }, []);
+
   return (
     <div>
-      {answerOptions.map((a) => (
+      {sortedAnswers.map((a) => (
         <div key={a.answerText}>
           <input
             type="radio"
@@ -18,7 +17,7 @@ const AnswerList = ({
             {...register(`${question}`, { required: true })}
           />
           {show ? (
-            <label className={rightAnswer ? "basic show" : "basic"}>
+            <label className={a.isCorrect ? "basic show" : "basic"}>
               {a.answerText}
             </label>
           ) : (
