@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useForm } from "react-hook-form";
 import { compare } from "../../utils/compare";
 import "./path.css";
+import QuestionsList from "./QuestionsList";
 
 const PathTest = () => {
   const questions = [
@@ -31,8 +31,6 @@ const PathTest = () => {
   const [checkAnswers, setCheckAnswers] = useState([]);
   const [rightAnswerCounter, setRightAnswerCounter] = useState();
 
-  const { register, handleSubmit } = useForm();
-
   function showRightAnswer(data) {
     if (!show) {
       setShow(true);
@@ -41,14 +39,14 @@ const PathTest = () => {
     }
 
     const userAnswers = Object.values(data);
-    for (let i=0; i<userAnswers.length; i++) {
+    for (let i = 0; i < userAnswers.length; i++) {
       let hasNull = false;
-      if(userAnswers[i] == null) {
+      if (userAnswers[i] == null) {
         hasNull = true;
         break;
       }
       if (!hasNull) {
-        setCheckAnswers(compare(userAnswers, rightAnswers)); 
+        setCheckAnswers(compare(userAnswers, rightAnswers));
       }
     }
   }
@@ -58,52 +56,33 @@ const PathTest = () => {
     for (let i = 0; i < answers.length; i++) {
       answers[i] = answers[i].filter((a) => a.isCorrect)[0].answerText;
     }
-    return answers
-  }, [])
+    return answers;
+  }, []);
 
   const righAnsewrsCount = () => {
     if (checkAnswers.length) {
-      setRightAnswerCounter(`Правильных ответов ${questions.length - checkAnswers.length} из ${questions.length}`) ;
-    } 
-    else {
-      setRightAnswerCounter('все ответы верны');
+      setRightAnswerCounter(
+        `Правильных ответов ${questions.length - checkAnswers.length} из ${
+          questions.length
+        }`
+      );
+    } else {
+      setRightAnswerCounter("все ответы верны");
     }
-  }
+  };
 
-  useEffect(()=>{
-    righAnsewrsCount()
-  }, [checkAnswers])
+  useEffect(() => {
+    righAnsewrsCount();
+  }, [checkAnswers]);
 
   return (
     <div>
       <div className="test">
-        <form onSubmit={handleSubmit(showRightAnswer)}>
-          {questions.map((q) => (
-            <div key={q.id} className="question__section">
-              <h1>{q.questionText}</h1>
-              {q.answerOptions.map((a) => (
-                <div key={a.answerText}>
-                  <input
-                    type="radio"
-                    value={`${a.answerText}`}
-                    name={`${q.questionText}`}
-                    {...register(`${q.questionText}`, {required: true})}
-                  />
-                  {show ? (
-                    <label className={a.isCorrect ? "basic show" : "basic"}>
-                      {a.answerText}
-                    </label>
-                  ) : (
-                    <label>{a.answerText}</label>
-                  )}
-                </div>
-              ))}
-            </div>
-          ))}
-          <br /> <hr /> <br />
-          <button type="submit"> Показать/скрыть</button>
-        </form>
-
+        <QuestionsList 
+          showRightAnswer={showRightAnswer}
+          questions={questions}
+          show={show}
+        />
         {show ? (
           <div className="answers">
             <br /> <hr /> <br />
