@@ -8,7 +8,7 @@ const QuestionsList = ({showRightAnswer, questions, show}) => {
 
   return (
     <form onSubmit={handleSubmit(showRightAnswer)}>
-      {questions.map((q) => (
+      {questions.map(q => (
         <div key={q.id} className="question__section">
           <h1>{q.questionText}</h1>
           <AnswerList

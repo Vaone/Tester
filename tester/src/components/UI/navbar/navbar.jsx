@@ -5,16 +5,13 @@ import cl from './navbar.module.css';
 const Navbar = () => {
   return (
     <div className={cl.navbar}>
-      <Link to="/Home" className={cl.navbarLink}>
-        Главная
-      </Link>
       <Link to="/createTests" className={cl.navbarLink}>
         Создать тест
       </Link>
       <Link to="/createQuestions" className={cl.navbarLink}>
         Создать вопросник
       </Link>
-      <Link to="/pathTest" className={cl.navbarLink}>
+      <Link to="/SelectTest" className={cl.navbarLink}>
         Пройти тест
       </Link>
       <Link to="/pathQuestions" className={cl.navbarLink}>

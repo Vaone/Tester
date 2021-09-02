@@ -1,23 +1,25 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { compare } from "../../utils/compare";
-import "./path.css";
-import QuestionsList from "./QuestionsList";
 
-const PathTest = ({questions}) => {
-  
+import { compare } from "../../utils/compare";
+import QuizList from "./QuizList";
+import AnswersCheckList from "./AnswersCheckList";
+
+const PathQuiz = ({ questions }) => {
   const [show, setShow] = useState(false);
   const [checkAnswers, setCheckAnswers] = useState([]);
   const [rightAnswerCounter, setRightAnswerCounter] = useState();
+  const [userAns, setUserAns] = useState([]);
 
-  function showRightAnswer(data) {
+  function endTest(data) {
     if (!show) {
       setShow(true);
     } else {
       setShow(false);
     }
-
     // массив ответов
     const userAnswers = Object.values(data);
+
+    setUserAns(userAnswers);
     // проверка есть ли пустые значения
     for (let i = 0; i < userAnswers.length; i++) {
       let hasNull = false;
@@ -31,13 +33,7 @@ const PathTest = ({questions}) => {
     }
   }
 
-  const rightAnswers = useMemo(() => {
-    const answers = questions.map((q) => q.answerOptions);
-    for (let i = 0; i < answers.length; i++) {
-      answers[i] = answers[i].filter((a) => a.isCorrect)[0].answerText;
-    }
-    return answers;
-  }, []);
+  const rightAnswers = useMemo(() => questions.map((q) => q.answer), []);
 
   const righAnsewrsCount = () => {
     if (checkAnswers.length) {
@@ -58,22 +54,17 @@ const PathTest = ({questions}) => {
   return (
     <div>
       <div className="test">
-        <QuestionsList 
+        <QuizList questions={questions} endTest={endTest} />
+
+        {/* <QuestionsList 
           showRightAnswer={showRightAnswer}
           questions={questions}
           show={show}
-        />
-        {show ? (
-          <div className="answers">
-            <br /> <hr /> <br />
-            правильные ответы: {rightAnswerCounter}
-          </div>
-        ) : (
-          <div></div>
-        )}
+        /> */}
+        <AnswersCheckList show={show} rightAnswerCounter={rightAnswerCounter} userAnswers={userAns} rightAnswers={rightAnswers}/>
       </div>
     </div>
   );
 };
 
-export default PathTest;
+export default PathQuiz;

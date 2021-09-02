@@ -4,8 +4,8 @@ import Error from '../pages/Error';
 import CreateTests from '../pages/CreateTests';
 import CreateQuestions from '../pages/CreateQuestions';
 import Home from '../pages/Home';
-import PathQuestions from '../pages/PathQuestions';
-import PathTest from '../pages/PathTest/PathTest';
+import SelectQuestions from '../pages/SelectQuestions';
+import SelectTest from '../pages/SelectTest';
 import Exam from '../pages/Exam';
 
 const AppRouter = () => {
@@ -20,10 +20,9 @@ const AppRouter = () => {
       <Route path='/createQuestions'>
         <CreateQuestions />
       </Route>
-      <Route path='/pathTest'>
-        <PathTest />
-      </Route>
-      <Route path='/pathQuestions' component={PathQuestions}/>
+      <Route path='/SelectTest' component={SelectTest} />
+      {/* <Route path='/pathTest' component={PathTest} /> */}
+      <Route path='/pathQuestions' component={SelectQuestions}/>
       <Route path='/Exam'>
         <Exam />
       </Route>
